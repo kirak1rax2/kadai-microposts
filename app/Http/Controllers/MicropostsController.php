@@ -13,7 +13,19 @@ class MicropostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     
+     public function store(Request $request)
+    {
+        $this->validate($request, [
+            'content' => 'required|max:191',
+        ]);
+
+        $request->user()->microposts()->create([
+            'content' => $request->content,
+        ]);
+
+        return redirect()->back();
+    }
+    
     public function index()
     {
         $data = [];
